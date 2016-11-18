@@ -1,0 +1,1 @@
+1. manually setup relation betweeen user_id and cases_uid in XAMPP(phpmyadmin)
