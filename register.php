@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION['usr_id'])) {
+if(isset($_SESSION['user_id'])) {
 	header("Location: index.php");
 }
 
@@ -13,6 +13,7 @@ $error = false;
 //check if form is submitted
 if (isset($_POST['signup'])) {
 	$name = mysqli_real_escape_string($con, $_POST['name']);
+	$lname = mysqli_real_escape_string($con, $_POST['lname']);
 	$email = mysqli_real_escape_string($con, $_POST['email']);
 	$password = mysqli_real_escape_string($con, $_POST['password']);
 	$cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
@@ -21,7 +22,11 @@ if (isset($_POST['signup'])) {
 	//name can contain only alpha characters and space
 	if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
 		$error = true;
-		$name_error = "Name must contain only alphabets and space";
+		$name_error = "First Name must contain only alphabets and space";
+	}
+	if (!preg_match("/^[a-zA-Z ]+$/",$lname)) {
+		$error = true;
+		$name_error = "Last Name must contain only alphabets and space";
 	}
 	if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
 		$error = true;
@@ -40,7 +45,7 @@ if (isset($_POST['signup'])) {
 		$cpassword_error = "Password and Confirm Password doesn't match";
 	}
 	if (!$error) {
-		if(mysqli_query($con, "INSERT INTO users(name,email,password,inNumber) VALUES('" . $name . "', '" . $email . "', '" . md5($password) . "', '" . $inNumber . "')")) {
+		if(mysqli_query($con, "INSERT INTO users(name,lname, email,password,inNumber) VALUES('" . $name . "', '" . $lname . "', '" . $email . "', '" . md5($password) . "', '" . $inNumber . "')")) {
 			$successmsg = "Successfully Registered! <a href='login.php'>Click here to Login</a>";
 		} else {
 			$errormsg = "Error in registering...<br> Account with provided Social Insurance NO. or Email Address already exists!";
@@ -67,6 +72,7 @@ if (isset($_POST['signup'])) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
 				<span class="icon-bar"></span> <!--add a new row-->
 			</button>
 			<a class="navbar-brand" href="index.php">Online Business Application</a>
@@ -86,11 +92,17 @@ if (isset($_POST['signup'])) {
 		<div class="col-md-4 col-md-offset-4 well">
 			<form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="signupform">
 				<fieldset>
-					<legend>Create Your BAccount</legend>
+					<legend>Create Your Account</legend>
 
 					<div class="form-group">
-						<label for="name">Name</label>
-						<input type="text" name="name" placeholder="Enter Full Name" required value="<?php if($error) echo $name; ?>" class="form-control" />
+						<label for="name">First Name</label>
+						<input type="text" name="name" placeholder="Enter First Name" required value="<?php if($error) echo $name; ?>" class="form-control" />
+						<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
+					</div>
+					
+					<div class="form-group">
+						<label for="name">Last Name</label>
+						<input type="text" name="lname" placeholder="Enter Last Name" required value="<?php if($error) echo $lname; ?>" class="form-control" />
 						<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
 					</div>
 					
@@ -129,7 +141,7 @@ if (isset($_POST['signup'])) {
 	</div>
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4 text-center">	
-		Already Have an Account with GOV? <a href="login.php">Login Here</a>
+		Already Have an Account with GOO? <a href="login.php">Login Here</a>
 		</div>
 	</div>
 </div>

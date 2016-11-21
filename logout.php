@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if(isset($_SESSION['usr_id'])) {
+if(isset($_SESSION['user_id'])) {
 	session_destroy();
-	unset($_SESSION['usr_id']);
+	unset($_SESSION['user_id']);
 	unset($_SESSION['usr_name']);
 	header("Location: index.php");
 } else {

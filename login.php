@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if(isset($_SESSION['usr_id'])!="") {
-	header("Location: form.php");
+if(isset($_SESSION['user_id'])!="") {
+	header("Location: index.php");
 }
 
 include_once 'dbconnect.php';
@@ -15,9 +15,9 @@ if (isset($_POST['login'])) {
 	$result = mysqli_query($con, "SELECT * FROM users WHERE email = '" . $email. "' and password = '" . md5($password) . "'");
 
 	if ($row = mysqli_fetch_array($result)) {
-		$_SESSION['usr_id'] = $row['id'];
+		$_SESSION['user_id'] = $row['id'];
 		$_SESSION['usr_name'] = $row['name'];
-		header("Location: form.php");
+		header("Location: index.php");
 	} else {
 		$errormsg = "Incorrect Email or Password!!!";
 	}

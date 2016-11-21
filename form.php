@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION['usr_id'])) {
+if(isset($_SESSION['user_id'])) {
 	header("Location: form.php");
 }
 
@@ -10,49 +10,25 @@ include_once 'dbconnect.php';
 //set validation error flag as false
 $error = false;
 
-//check if form is submitted
-if (isset($_POST['signup'])) {
-	$name = mysqli_real_escape_string($con, $_POST['name']);
-	$email = mysqli_real_escape_string($con, $_POST['email']);
-	$password = mysqli_real_escape_string($con, $_POST['password']);
-	$cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
-	$inNumber = mysqli_real_escape_string($con, $_POST['inNumber']);
+if (isset($_POST['submitform'])) {
+	$uid = $user_id;
+	$type = mysqli_real_escape_string($con, $_POST['type']);
+	$time = date('Y-m-d H:i:s');
+	$status = 0;
 	
-	//name can contain only alpha characters and space
-	if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
-		$error = true;
-		$name_error = "Name must contain only alphabets and space";
-	}
-	if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-		$error = true;
-		$email_error = "Please Enter Valid Email ID";
-	}
-	if(strlen($inNumber) != 10) {
-		$error = true;
-		$inNumber_error = "Social Insurance NO. must be 10 digits";
-	}
-	if(strlen($password) < 6) {
-		$error = true;
-		$password_error = "Password must be minimum of 6 characters";
-	}
-	if($password != $cpassword) {
-		$error = true;
-		$cpassword_error = "Password and Confirm Password doesn't match";
-	}
-	if (!$error) {
-		if(mysqli_query($con, "INSERT INTO users(name,email,password,inNumber) VALUES('" . $name . "', '" . $email . "', '" . md5($password) . "', '" . $inNumber . "')")) {
-			$successmsg = "Successfully Registered! <a href='login.php'>Click here to Login</a>";
+		if(mysqli_query($con, "INSERT INTO cases(uid,type,time,status) VALUES('" . $uid . "', '" . $type . "','" . $time . "', '" . $status . "')")) {
+			$successmsg = "Application submitted! <a href='payment.php'>Click here forward to Payment</a>";
 		} else {
-			$errormsg = "Error in registering...<br> Account with provided Social Insurance NO. or Email Address already exists!";
+			$errormsg = "Error in form submission, an internal error has occurred";
 		}
 	}
-}
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>User Registration Script</title>
+	<title>License form Script</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" >
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 </head>
@@ -75,51 +51,27 @@ if (isset($_POST['signup'])) {
 		<div class="collapse navbar-collapse" id="navbar1">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="login.php">Login</a></li>
-				<li class="active"><a href="register.php">Sign Up</a></li>
+				<li class="active"><a href="form.php">fill form</a></li>
 			</ul>
 		</div>
 	</div>
 </nav>
-
+<!-- select license form starts-->
 <div class="container">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4 well">
-			<form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="signupform">
+			<form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="submitformform">
 				<fieldset>
-					<legend>Create Your Account</legend>
+					<legend>Select License Type</legend>
 
 					<div class="form-group">
-						<label for="name">Name</label>
-						<input type="text" name="name" placeholder="Enter Full Name" required value="<?php if($error) echo $name; ?>" class="form-control" />
-						<span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
-					</div>
-					
-					<div class="form-group">
-						<label for="name">Email</label>
-						<input type="text" name="email" placeholder="Email" required value="<?php if($error) echo $email; ?>" class="form-control" />
-						<span class="text-danger"><?php if (isset($email_error)) echo $email_error; ?></span>
-					</div>
+						<label for="name">License</label>
+						<input type="int" name="type" placeholder="License Type" required class="form-control" />
+						<span class="text-danger"><?php if (isset($License_error)) echo $License_error; ?></span>
+					</div>										
 
 					<div class="form-group">
-						<label for="name">Password</label>
-						<input type="password" name="password" placeholder="Password" required class="form-control" />
-						<span class="text-danger"><?php if (isset($password_error)) echo $password_error; ?></span>
-					</div>
-
-					<div class="form-group">
-						<label for="name">Confirm Password</label>
-						<input type="password" name="cpassword" placeholder="Confirm Password" required class="form-control" />
-						<span class="text-danger"><?php if (isset($cpassword_error)) echo $cpassword_error; ?></span>
-					</div>
-					<!--add a new row-->
-					<div class="form-group">
-						<label for="name">Social Insurance Number</label>
-						<input type="text" name="inNumber" placeholder="Social Insurance Number" required value="<?php if($error) echo $inNumber; ?>" class="form-control" />
-						<span class="text-danger"><?php if (isset($inNumber_error)) echo $inNumber_error; ?></span>
-					</div>
-
-					<div class="form-group">
-						<input type="submit" name="signup" value="Sign Up" class="btn btn-primary" />
+						<input type="submit" name="submitform" value="fill form" class="btn btn-primary" />
 					</div>
 				</fieldset>
 			</form>
@@ -127,9 +79,10 @@ if (isset($_POST['signup'])) {
 			<span class="text-danger"><?php if (isset($errormsg)) { echo $errormsg; } ?></span>
 		</div>
 	</div>
+	<!--portal view past applications-->
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4 text-center">	
-		Already Registered? <a href="login.php">Login Here</a>
+		Already submitted applications? <a href="userview.php">View past applications</a>
 		</div>
 	</div>
 </div>
