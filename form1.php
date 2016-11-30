@@ -54,12 +54,6 @@ include_once 'dbconnect.php';
 	</div>
 </nav>
 
-
-
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
-
-
-</html>
-

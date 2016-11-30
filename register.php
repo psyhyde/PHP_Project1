@@ -73,6 +73,7 @@ if (isset($_POST['signup'])) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
 				<span class="icon-bar"></span> <!--add a new row-->
 			</button>
 			<a class="navbar-brand" href="index.php">Online Business Application</a>
