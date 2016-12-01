@@ -29,7 +29,7 @@ include_once 'dbconnect.php';
 				<li><p class="navbar-text"> Signed in as <?php echo $_SESSION['user_name']; ?></p></li>
 <!-- fixing sth here-->				
 				<li><a href="form1.php">New Application</a></li>
-				<li><a href="viewapplication.php">My Applications</a></li>
+				<li><a href="viewapplication.php">My Application</a></li>
 				<li><a href="logout.php">Log Out</a></li>
 				<?php } else { ?>
 				<li><a href="login.php">Login</a></li>
@@ -53,31 +53,33 @@ include_once 'dbconnect.php';
 		
 	</div>
 </nav>
-<!--Echo session variables that were set on previous pages -->
-<div class="container">
-<div class="jumbotron text-left-top">
-  <p><?php echo "Hello " . $_SESSION["user_name"];?><p>
-  <p><?php echo "Your Social Insurance Number(SIN) is " . $_SESSION["user_inNo"];
-?></p> 
-  <p>If not, please <a href="logout.php">Log Out</a></p>
-</div>
-</div>
 
-<div class="container">                                        
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Select a Type of License
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="generallicense.php">General License</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Smoke Retailing License</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Firearm Retailing License</a></li>
-      <li role="presentation" class="divider"></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Extend a License</a></li>
-    </ul>
-  </div>
-</div>
+<container>
+  <table class="table">
+    <?php 
+	$sql = "SELECT id, time, type, statu FROM testdb WHERE cid = '$_SESSION['user_id']'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+    // output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "id: " . $row["Case #"]. " time: " . $row["Time"]. "type" . $row["License Type #"]. " statu: " . $row["Processing Status"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+mysqli_close($conn);
+	?>
+  </table>
+  bangao 
+</container>
+
+
 
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
+
+
 </html>

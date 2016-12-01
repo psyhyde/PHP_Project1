@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `cid` int(8) NOT NULL DEFAULT '0',
   `time` datetime NOT NULL,
   `type` int(2) NOT NULL,
-  `statu` boolean NOT NULL,
+  `statu` boolean NOT NULL DEFAULT '0',
   `path` varchar(300) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

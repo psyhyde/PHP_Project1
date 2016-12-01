@@ -26,7 +26,7 @@ include_once 'dbconnect.php';
 		<div class="collapse navbar-collapse" id="navbar1">
 			<ul class="nav navbar-nav navbar-right">
 				<?php if (isset($_SESSION['user_id'])) { ?>
-				<li><p class="navbar-text">Signed in as <?php echo $_SESSION['user_name']; ?></p></li>
+				<li><p class="navbar-text"> Signed in as <?php echo $_SESSION['user_name']; ?></p></li>
 <!-- fixing sth here-->				
 				<li><a href="form1.php">New Application</a></li>
 				<li><a href="viewapplication.php">My Application</a></li>
@@ -53,8 +53,6 @@ include_once 'dbconnect.php';
 		
 	</div>
 </nav>
-
-
 
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>

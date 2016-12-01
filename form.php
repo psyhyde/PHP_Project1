@@ -3,6 +3,7 @@ session_start();
 
 if(isset($_SESSION['user_id'])) {
 	header("Location: index.php");
+	footer("Location: index.php");
 }
 
 include_once 'dbconnect.php';
@@ -12,22 +13,22 @@ $error = false;
 //assign 
 $uid = $_SESSION['user_id'];
 $time = date("Y-m-d H:i:s");
-$status = 0;
+$statu = 0;
 
 //check if form is submitted
 if (isset($_POST['submitform'])) {
 	$uid = mysqli_real_escape_string($con, $_POST['uid']);
 	$type = mysqli_real_escape_string($con, $_POST['type']);
 	$time = mysqli_real_escape_string($con, $_POST['time']);
-	$status = mysqli_real_escape_string($con, $_POST['status']);
+	$statu = mysqli_real_escape_string($con, $_POST['statu']);
 	
 	if($type !="") {
 		$error = false;
-		$password_error = "Please select a type of License";
+		$type_error = "Please select a type of License";
 	}
 	
 	if (!$error) {
-		if(mysqli_query($con, "INSERT INTO cases(uid,type,time,status) VALUES('" . $uid . "', '" . $type . "','" . $time . "', '" . $status . "')")) {
+		if(mysqli_query($con, "INSERT INTO cases(uid,type,time,statu) VALUES('" . $uid . "', '" . $type . "','" . $time . "', '" . $statu . "')")) {
 			$successmsg = "Application submitted! <a href='payment.php'>Click here forward to Payment</a>";
 		} else {
 			$errormsg = "Error in form submission, an internal error has occurred";
@@ -56,7 +57,7 @@ if (isset($_POST['submitform'])) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span> 
 			</button>
-			<a class="navbar-brand" href="index.php">Online Business Application</a>
+			<a class="navbar-brand" href="index.php">Online Business Applications</a>
 		</div>
 		<!-- menu items -->
 		<div class="collapse navbar-collapse" id="navbar1">
@@ -71,7 +72,7 @@ if (isset($_POST['submitform'])) {
 <div class="container">
 	<div class="row">
 		<div class="col-md-4 col-md-offset-4 well">
-			<form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="submitformform">
+			<form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="submitform">
 				<fieldset>
 					<legend>Select License Type</legend>
 

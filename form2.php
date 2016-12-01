@@ -1,7 +1,36 @@
 <?php
 session_start();
+
+
 include_once 'dbconnect.php';
+
+//set validation error flag as false
+$error = false;
+//assign 
+
+
+//check if form is submitted
+if (isset($_POST['submitform'])) {
+	$uid = mysqli_real_escape_string($con, $_POST['uid']);
+	$type = mysqli_real_escape_string($con, $_POST['type']);
+	$time = mysqli_real_escape_string($con, $_POST['time']);
+	$statu = mysqli_real_escape_string($con, $_POST['statu']);
+	
+	if($type ="") {
+		$error = true;
+		$type_error = "Please select a type of License";
+	}
+	
+	if (!$error) {
+		if(mysqli_query($con, "INSERT INTO cases(uid,type,time,statu) VALUES('" . $uid . "', '" . $type . "','" . $time . "', '" . $statu . "')")) {
+			$successmsg = "Application submitted! <a href='payment.php'>Click here forward to Payment</a>";
+		} else {
+			$errormsg = "Error in form submission, an internal error has occurred";
+		}
+	}
+
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,31 +82,7 @@ include_once 'dbconnect.php';
 		
 	</div>
 </nav>
-<!--Echo session variables that were set on previous pages -->
-<div class="container">
-<div class="jumbotron text-left-top">
-  <p><?php echo "Hello " . $_SESSION["user_name"];?><p>
-  <p><?php echo "Your Social Insurance Number(SIN) is " . $_SESSION["user_inNo"];
-?></p> 
-  <p>If not, please <a href="logout.php">Log Out</a></p>
-</div>
-</div>
 
-<div class="container">                                        
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Select a Type of License
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="generallicense.php">General License</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Smoke Retailing License</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Firearm Retailing License</a></li>
-      <li role="presentation" class="divider"></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Extend a License</a></li>
-    </ul>
-  </div>
-</div>
 
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
