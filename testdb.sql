@@ -22,7 +22,10 @@ CREATE TABLE IF NOT EXISTS `cases` (
   `cid` int(8) NOT NULL DEFAULT '0',
   `time` datetime NOT NULL,
   `type` int(2) NOT NULL,
-  `statu` boolean NOT NULL DEFAULT '0',
+  `typedes` varchar(50) NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `postal` varchar(7) NOT NULL,
+  `statu` int(2) NOT NULL DEFAULT '0',
   `path` varchar(300) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -31,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `cases` (
 DROP TABLE IF EXISTS `clerk`;
 CREATE TABLE IF NOT EXISTS `clerk` (
   `id` int(8) NOT NULL AUTO_INCREMENT,
-  `eid` int(6) NOT NULL,
+  `eid` int(8) NOT NULL,
   `password` varchar(40) NOT NULL,
   `type` int(2) NOT NULL,
   PRIMARY KEY (`id`),

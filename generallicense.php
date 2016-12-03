@@ -1,7 +1,45 @@
 <?php
 session_start();
 include_once 'dbconnect.php';
+
+//set validation error flag as false
+$error = false;
+$user_check = (int) $_SESSION['user_id'];
+
+$uid = (int) $_SESSION['user_id'];
+$type = 1;
+$typedes ="General";
+$time = date("Y-m-d H:i:s");
+
+
+//check if form is submitted
+if (isset($_POST['applycase'])) {
+	$location = mysqli_real_escape_string($con, $_POST['location']);
+	$postal = mysqli_real_escape_string($con, $_POST['postal']);
+	$uid = mysqli_real_escape_string($con, $uid);
+    $type = mysqli_real_escape_string($con, $type);
+    $typedes = mysqli_real_escape_string($con, $typedes);
+    $time = mysqli_real_escape_string($con, $time);	
+	
+	//name can contain only alpha characters and space /^[A-Za-z0-9-_",'\s]+$/
+	if (!preg_match("/^[a-zA-Z0-9-_\",\'\s ]+$/",$location)) {
+		$error = true;
+		$location_error = "Location can not contain special symbol @#^%";
+	}
+	if (!preg_match("/^[a-zA-Z0-9-_\",\'\s ]+$/",$postal)) {
+		$error = true;
+		$postal_error = "Location can not contain special symbol @#^%";
+	}	
+	if (!$error) {
+		if(mysqli_query($con, "INSERT INTO cases(uid,time,type,typedes,location,postal) VALUES('" . $uid . "', '" . $time . "', '" . $type . "', '" . $typedes . "', '" . $location . "', '" . $postal . "')")) {
+			$successmsg = "Information Uploaded! <a href='popform.php'>Upload</a>";
+		} else {
+			$errormsg = "Error in Inserting";
+		}
+	}
+}
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,27 +92,46 @@ include_once 'dbconnect.php';
 	</div>
 </nav>
 
-<container>
-  <table class="table">
-    <?php 
-	$sql = "SELECT id, time, type, statu FROM testdb WHERE cid = '$_SESSION['user_id']'";
-    $result = mysqli_query($conn, $sql);
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 well">
+			<form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="applycase">
+				<fieldset>
+					<legend>General Application Form</legend>
 
-    if (mysqli_num_rows($result) > 0) {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result)) {
-        echo "id: " . $row["Case #"]. " time: " . $row["Time"]. "type" . $row["License Type #"]. " statu: " . $row["Processing Status"]. "<br>";
-    }
-} else {
-    echo "0 results";
-}
+					<div class="form-group">
+						<label for="name">Location</label>
+						<input type="text" name="location" placeholder="Full address of your business location" required value="<?php if($error) echo $location; ?>" class="form-control" />
+						<span class="text-danger"><?php if (isset($location_error)) echo $location_error; ?></span>
+					</div>
+					
+					<div class="form-group">
+						<label for="name">Postal Code</label>
+						<input type="text" name="postal" placeholder="7 char max" required value="<?php if($error) echo $postal; ?>" class="form-control" />
+						<span class="text-danger"><?php if (isset($postal_error)) echo $postal_error; ?></span>
+					</div>
+					
+					<div class="form-group">
+						<input type="submit" name="applycase" value="Apply" class="btn btn-primary" />
+					</div>
+				</fieldset>
+			</form>
+			<span class="text-success"><?php if (isset($successmsg)) { echo $successmsg; } ?></span>
+			<span class="text-danger"><?php if (isset($errormsg)) { echo $errormsg; } ?></span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4 text-center">	
+			<a href="List of license.php">List of Licenses and Eligibility </a>
+		</div>
+	</div>
+</div>
 
-mysqli_close($conn);
-	?>
-  </table>
-  bangao 
-</container>
 
+
+<button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-star" aria-hidden="true"></span><a href='popform.php'>Star</a>
+</button>
 
 
 <script src="js/jquery-1.10.2.js"></script>

@@ -53,57 +53,27 @@ include_once 'dbconnect.php';
 		
 	</div>
 </nav>
+<!--form start here-->
 
-<div class="container">
-    <div class="table-responsive"> 
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-				<th>Case #</th>
-				<th>Submission TimeStamp</th>
-				<th>License Type Code</th>
-				<th>License Type</th>
-				<th>Location</th>
-				<th>Postal Code</th>
-				<th>Status</th>
-				</tr>
-			</thead>
-				<tbody>
-				
-    <?php 
-	$user_check =(int) $_SESSION['user_id'];
-	$sql = "SELECT id, time, type, typedes, location, postal, statu FROM cases WHERE uid = $user_check";
-    $result2 = mysqli_query($con, $sql);
-	// session to int FU
-    if (mysqli_num_rows($result2) !="") {
-    // output data of each row
-    while($row = mysqli_fetch_assoc($result2)) {
-		//$invID = str_pad($invID, 4, '0', STR_PAD_LEFT);
-        echo '<tr>
-			<td scope = "row">' .$row['id']. '</td>
-			<td>' .$row['time']. '</td>
-			<td>' .$row['type']. '</td>
-			<td>' .$row['typedes']. '</td>
-			<td>' .$row['location']. '</td>
-			<td>' .$row['postal']. '</td>
-			<td>' .$row['statu']. '</td>
-			</tr>';
-		}
-				
-} else {?>
-    <div class="container"> 
-		<div class="alert alert-info">
-			<strong>Info!</strong> You do not have previous record
-		</div>	
-	</div>
-<?php }
-				
-mysqli_close($con);
-	?>
-				</tbody>
-		</table>
-	</div>
-</div> 
+
+        <legend>Simple upload</legend>
+        <p>Pick up a file to upload, and press "upload" </p>
+        <form name="form1" enctype="multipart/form-data" method="post" action="upload.php" />
+            <p><input type="file" size="32" name="my_field" value="" /></p>
+            <p class="button"><input type="hidden" name="action" value="simple" />
+            <input type="submit" name="Submit" value="upload" /></p>
+        </form>
+    
+
+    
+        <legend>Image upload</legend>
+        <p>Pick up an image to upload, and press "upload" </p>
+        <form name="form2" enctype="multipart/form-data" method="post" action="upload.php" />
+            <p><input type="file" size="32" name="my_field" value="" /></p>
+            <p class="button"><input type="hidden" name="action" value="image" />
+            <input type="submit" name="Submit" value="upload" /></p>
+        </form>
+    
 
 
 
