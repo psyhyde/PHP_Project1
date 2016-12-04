@@ -128,15 +128,7 @@ if (isset($_POST['applycase'])) {
 </div>
 
 
-
-<button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-star" aria-hidden="true"></span><a href='popform.php'>Star</a>
-</button>
-
-
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
-
-
 </html>

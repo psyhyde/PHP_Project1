@@ -20,9 +20,9 @@
     "autoload": {
         "classmap": ["src/class.upload.php"]
     }
-	 {
+	   {
        "require": {
-           "verot/class.upload.php": "dev-master"
+           "src/class.upload.php": "dev-master"
        }
     }
 }
