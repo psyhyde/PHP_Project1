@@ -52,7 +52,12 @@ include_once 'dbconnect.php';
 	</div>
 </nav>
 
-<p><a herf = process-case.php>All Pending Cases</a></p>
+<div class="container-fluid">
+<button type="button" class="btn btn-default">
+<a herf = 'process-case-all.php'>All Cases 
+</a>
+</button>
+</div>
 
 <div class="container">
     <div class="table-responsive"> 

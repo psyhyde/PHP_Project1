@@ -54,7 +54,7 @@ include_once 'dbconnect.php';
 
 <div class="container-fluid">
 <button type="button" class="btn btn-default">
-<a herf = 'process-case-all.php'>All Cases
+<a herf = 'process-case.php'>All Pending Cases 
 </a>
 </button>
 </div>
