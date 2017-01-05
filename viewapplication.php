@@ -8,6 +8,8 @@ include_once 'dbconnect.php';
 	<title>Online Business Application </title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" >
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+
+
 </head>
 <body>
 
@@ -106,10 +108,49 @@ mysqli_close($con);
 </div> 
 
 
+</script>
+
 
 <script src="js/jquery-1.10.2.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
 
 
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>YouTubePopUp Plugin</title>
+	<link rel="stylesheet" type="text/css" href="css/YouTubePopUp.css">
+	<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+	<script type="text/javascript" src="js/YouTubePopUp.jquery.js"></script>
+	<script type="text/javascript">
+		jQuery(function(){
+			jQuery("a.bla-1").YouTubePopUp();
+			jQuery("a.bla-2").YouTubePopUp( { autoplay: 0 } ); // Disable autoplay
+		});
+	</script>
+</head>
+<body>
+<div class = "container">
+<h3>YouTube</h3>
+<p>
+	<a class="bla-1" href="https://www.youtube.com/watch?v=3qyhgV0Zew0">This YouTube video with autoplay</a> and
+	<a class="bla-2" href="https://www.youtube.com/watch?v=3qyhgV0Zew0">This YouTube video without autoplay</a>
+</p>
+<p>---------------</p>
+</div>
+
+<div class ="container">
+<h3>Vimeo</h3>
+<p>
+	<a class="bla-1" href="https://vimeo.com/81527238">This Vimeo video with autoplay</a> and
+	<a class="bla-2" href="https://vimeo.com/81527238">This Vimeo video without autoplay</a>
+</p>
+<p>---------------</p>
+<p><a target="_blank" href="http://wp-time.com">Visit WP Time</a> - <a target="_blank" href="http://wp-plugins.in">Free WordPress Plugins</a> - <a target="_blank" href="https://creativemarket.com/WPTime?u=WPTime">WordPress Themes</a> - <a target="_blank" href="http://qass.im">Qassim Hassan</a></p>
+</div>
+</body>
 </html>
